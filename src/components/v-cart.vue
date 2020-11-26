@@ -16,6 +16,14 @@
       @remove-item-from-cart="removeItemFromCart"
       />
  
+      <div class="v-cart">
+        <div class="v-cart__total">
+          <p class="v-cart__total_name">Total:&nbsp;</p>
+          <p>{{ cartTotalCost }} Р.</p>
+        </div>
+      </div>
+
+
 
   </div>
 </template>
@@ -35,6 +43,18 @@ export default {
         this.DELETE_FROM_CART(index);
       }
     },
+    computed: {
+      cartTotalCost() {
+        if(this.cart_data.length !== 0) {
+          let totalCosts = [];
+          for(let item of this.cart_data) {
+            totalCosts.push(item.price * item.quantity);
+          }
+          return totalCosts.reduce((p, c) => { return p + c; }, 0);
+        }
+        return 0;
+      }
+    },
     props: {
       cart_data: {
         type: Array,
@@ -52,8 +72,25 @@ export default {
       position: absolute;
       top: 10px;
       right: 10px;
-      padding: $padding * 2;
+      padding: $padding * 3;
       border: 1px solid black;
     }
   }
+
+  .v-cart {
+    &__total {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      padding: $padding * 3;
+      display: flex;
+      justify-content: center;
+      background: #26ae68;
+    }
+    &_total_name {
+      margin-right: $margin * 2;
+    }
+  }
+
 </style>

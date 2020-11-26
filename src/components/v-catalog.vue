@@ -1,7 +1,7 @@
 <template>
   <div class="v-catalog">
     <router-link :to="{ name: 'cart', params: {cart_data: CART} }">
-      <div class="v-catalog__link_to_cart">Cart: {{ CART.length }}</div>
+      <div class="v-catalog__link_to_cart">Cart: {{ CART_TOTAL_ITEMS }} ({{ CART_TOTAL_SUM }} Р.)</div>
     </router-link>
     <h1>Catalog {{ title }}</h1>
     <div class="v-catalog__list">
@@ -25,7 +25,7 @@ export default {
     vCatalogItem,
   },
   computed: {
-    ...mapGetters(["PRODUCTS", "CART"]),
+    ...mapGetters(["PRODUCTS", "CART", "CART_TOTAL_ITEMS", "CART_TOTAL_SUM"]),
   },
   methods: {
     ...mapActions(["GET_PRODUCTS", "ADD_TO_CART"]),

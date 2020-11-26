@@ -10,13 +10,20 @@
       <p>
         Quantity:
       </p>
-        {{cart_item_data.quantity}}
+      <span>
+        <span @click="decreaseQty">-</span>
+          {{ cart_item_data.quantity }}
+        <span @click="increaseQty">+</span>
+      </span>
     </div>
     <button class="btn" @click="removeFromCart">delete</button>
   </div>
 </template>
 
 <script>
+
+import { mapActions } from 'vuex';
+
 export default {
     props: {
       cart_item_data: {
@@ -33,6 +40,13 @@ export default {
       }
     },
     methods: {
+      ...mapActions(['INCREASE_CART_ITEMS', 'DECREASE_CART_ITEMS']),
+      increaseQty() {
+        this.INCREASE_CART_ITEMS(this.index);
+      },
+      decreaseQty() {
+        this.DECREASE_CART_ITEMS(this.index);
+      },
       removeFromCart() {
         this.$emit('remove-item-from-cart', this.index);
       }
